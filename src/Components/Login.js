@@ -81,7 +81,6 @@ export default function Login() {
         setemail('');
         setpassword('');
         if(!response.data.errorMessage){
-            console.log(response);
             usercontext.setUserData(response.data);
             usercontext.setProductData(responseProducts.data);
             usercontext.setIsLoggedIn(true);

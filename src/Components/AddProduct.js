@@ -1,5 +1,6 @@
 import React,{useState,useContext} from 'react';
-import { Container,Form,Card,InputGroup,FormControl, Button } from 'react-bootstrap';
+import { Container,Form,Card } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import { UserContext } from './Context';
 import axios from 'axios';
 
@@ -35,8 +36,11 @@ export default function AddProduct() {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
+        console.log(name.toLowerCase());
+        
         const productdata = {
             name,
+            smallcase:name.toLowerCase(),
             description,
             price,
             stock,
@@ -49,7 +53,7 @@ export default function AddProduct() {
             try{
                 let res = await axios.post("https://kp-onlinestore.herokuapp.com/upload",data);
                 productdata.photo = res.data["filename"];
-                productdata.seller = '61339f65dbf02912fa4efd01';
+                productdata.seller = contextdata.userData._id;
             }
             catch(err){
                 console.log(err)
@@ -59,7 +63,9 @@ export default function AddProduct() {
         try{
             
             const res = await axios.post("https://kp-onlinestore.herokuapp.com/products",productdata)
-            console.log(res);
+            if(res){
+                window.location.replace("/");
+            }
         }
         catch(err){
             console.log(err);
@@ -79,7 +85,7 @@ export default function AddProduct() {
                         <Form.Control as="textarea" aria-label="Description" placeholder="Enter Description" onChange={handleDescriptionChange}/>
                     </Form.Group>
                     <input className="mb-3" type="file" onChange={(e)=>setFile(e.target.files[0])}/>
-                    <img className="mb-3" style={{display:file?'block':"none",height:'200px',width:"200px"}} src={file?URL.createObjectURL(file):null}/>
+                    <img className="mb-3" style={{display:file?'block':"none",height:'200px',width:"200px"}} src={file?URL.createObjectURL(file):null} alt="product_image"/>
                     <Form.Group className="mb-3" controlId="formBasicPrice">
                         <Form.Label><Card.Title>Price (per unit)</Card.Title></Form.Label>
                         <Form.Control type="text" placeholder="Enter Price" onChange={handlePriceChange}/>
@@ -93,7 +99,7 @@ export default function AddProduct() {
                         <Form.Control type="text" placeholder="Enter Features" onChange={handleFeaturesChange}/>
                     </Form.Group>
 
-                    <Button className="btn btn-primary" onClick={handleSubmit}>Submit</Button>
+                    <Link className="btn btn-primary" to="/home" onClick={handleSubmit}>Submit</Link>
                 </Form>
             </Card>
         </Container>

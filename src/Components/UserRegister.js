@@ -60,7 +60,10 @@ export default function UserRegister() {
                     role
                 }
             })
-            setdisplayComponent(true);
+            if(response){
+                setdisplayComponent(true);
+            }
+            
              
           }).catch(function (err) {
             setmessageDisplay({display:"block",message:err.errors});

@@ -30,7 +30,10 @@ function App() {
                       </Route>
                       <Route exact path="/userregistration">
                         <UserRegister/>
-                      </Route>                    
+                      </Route> 
+                      <Route exact path="/home">
+                        <Home /> 
+                      </Route>                   
                   </Switch>
               </Router>
           </UserContext.Provider>
