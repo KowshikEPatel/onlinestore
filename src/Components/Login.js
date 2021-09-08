@@ -75,8 +75,8 @@ export default function Login() {
                         <div>Do not have an account?<Link to='/login' className="btn btn-link text-light">Register</Link></div>
                 </Form>
             </Col>
-            <Col xs={8} >
-                column two
+            <Col xs={8} style={{backgroundImage:"url(https://images.pexels.com/photos/331990/pexels-photo-331990.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500)"}}>
+                
             </Col>
 
         </Row>
