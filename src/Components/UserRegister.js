@@ -100,7 +100,7 @@ export default function UserRegister() {
                             Submit
                         </Button>
                         <div style={{display:messageDisplay.display, color:"red"}}>{messageDisplay.message}</div>
-                        <div>Already have an account?<Link to='/login'>Login</Link></div>
+                        <div>Already have an account?<Link to='/'>Login</Link></div>
                     </Form>
                 </Card.Body>
             </Card>      

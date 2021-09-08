@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import { Container,InputGroup,FormControl,Row,Col,Card } from 'react-bootstrap';
+import { Container,InputGroup,FormControl,Row,Col,Card, ListGroup } from 'react-bootstrap';
 import { UserContext } from './Context';
 
 
@@ -12,7 +12,7 @@ export default function Home() {
                 <div className="jumbotron jumbotron-fluid pb-3">
                     <div className="container">
                         <h1 className="display-4">SuperStore</h1>
-                        <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                        <p className="lead">Your search for food ends here.</p>
                         <InputGroup className="mb-3">
                             <FormControl
                             placeholder="Product search"
@@ -31,15 +31,18 @@ export default function Home() {
                             let srcvar = "https://kp-onlinestore.herokuapp.com/image/"+e.photo;
                             return <Col xs={3} className="m-2" key={index}>
                                         <Card className="border-light">
-                                            <Card.Img variant="top" src={srcvar} alt="product image"/>
+                                            <Card.Img variant="top" src={srcvar} alt="product image" width="100%"/>
+                                            <Card.Title>{e.name}   Rs.{e.price}</Card.Title>
+                                            <Card.Text>{e.description}</Card.Text>
+                                            <ListGroup>
+                                            {e.features.map((ele,index)=>{
+                                                return <ListGroup.Item key={index}>{ele}</ListGroup.Item>
+                                            })}
+                                            </ListGroup>
                                         </Card>
                                     </Col>
                         })
                     }
-                    <Col xs={3} className="m-2">col element</Col>
-                    <Col xs={3} className="m-2">col element</Col>
-                    <Col xs={3} className="m-2">col element</Col>
-                    <Col xs={3} className="m-2">col element</Col>
                 </Row>
             </Container>
             </>
