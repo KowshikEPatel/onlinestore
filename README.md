@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# ecommerce project 
+this is front end of ecommerce project. The live of the project can be found at 
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

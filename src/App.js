@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react'
+import { BrowserRouter as Router,Switch,Route } from 'react-router-dom';
+import {UserContext} from './Components/Context';
+import Topbar from './Components/Topbar';
+import Login from './Components/Login';
+import UserRegister from './Components/UserRegister';
+import Home from './Components/Home';
+import AddProduct from './Components/AddProduct';
+
+
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [productData, setProductData] = useState([])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData, productData, setProductData}}>
+              <Router>
+                <Topbar/>
+                  <Switch>
+                      <Route exact path="/">
+                        {isLoggedIn ? <Home /> : <Login/>}
+                      </Route>
+                      <Route exact path="/addproduct">
+                        <AddProduct/>
+                      </Route>
+                    <AddProduct/>
+                  </Switch>
+              </Router>
+          </UserContext.Provider>
   );
 }
 
