@@ -17,7 +17,7 @@ export default function Home() {
     const getSearch = async (e)=>{
 
         e.preventDefault();
-        let response = await axios.get("http://localhost:8000/products/key?search="+search.toLowerCase());
+        let response = await axios.get("https://kp-onlinestore.herokuapp.com/products/key?search="+search.toLowerCase());
         console.log(response);
     }
 

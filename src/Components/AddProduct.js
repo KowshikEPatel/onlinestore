@@ -1,6 +1,5 @@
 import React,{useState,useContext} from 'react';
-import { Container,Form,Card } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import { Container,Form,Card,Button } from 'react-bootstrap';
 import { UserContext } from './Context';
 import axios from 'axios';
 
@@ -13,6 +12,7 @@ export default function AddProduct() {
     const [stock, setStock] = useState(0);
     const [features, setFeatures] = useState('');
     const [file, setFile] = useState(null);
+    const [message,setMessage] = useState({display:"none",message:""})
     
     const handleNameChange = (e)=>{
         setName(e.target.value)
@@ -36,8 +36,6 @@ export default function AddProduct() {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        console.log(name.toLowerCase());
-        
         const productdata = {
             name,
             smallcase:name.toLowerCase(),
@@ -63,9 +61,12 @@ export default function AddProduct() {
         try{
             
             const res = await axios.post("https://kp-onlinestore.herokuapp.com/products",productdata)
+            const productarray= await axios('https://kp-onlinestore.herokuapp.com/products/all/1');
+            contextdata.setProductData(productarray.data);
             if(res){
-                window.location.replace("/");
+                setMessage({display:"block",message:`${productarray.data[productarray.data.length-1].name} Product added`})
             }
+
         }
         catch(err){
             console.log(err);
@@ -75,6 +76,7 @@ export default function AddProduct() {
     return (
         <Container>
             <Card className="border-light m-3" style={{ width: '40rem'}}>
+                <h3 style={{display:message.display,color:"green"}}>{message.message}</h3>
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label><Card.Title>Name</Card.Title></Form.Label>
@@ -99,7 +101,7 @@ export default function AddProduct() {
                         <Form.Control type="text" placeholder="Enter Features" onChange={handleFeaturesChange}/>
                     </Form.Group>
 
-                    <Link className="btn btn-primary" to="/home" onClick={handleSubmit}>Submit</Link>
+                    <Button className="btn btn-primary"  onClick={handleSubmit}>Submit</Button>
                 </Form>
             </Card>
         </Container>

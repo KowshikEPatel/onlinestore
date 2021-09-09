@@ -109,13 +109,14 @@ export default function Login() {
                             <Form.Label> Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange}/>
                         </Form.Group>
-                        <Button className="btn btn-light mb-2" onClick={handleLogin}>Login </Button>
+                            <Button className="btn btn-light mb-2" onClick={handleLogin}>Login </Button>
                         <div>
-                        <Button className="btn btn-light mt-1" onClick={handleLoginTestBuyer}>Login with test Buyer credentials </Button>
+                            <Button className="btn btn-light mt-1" onClick={handleLoginTestSeller}>Login with test Seller credentials </Button>
                         </div>
                         <div>
-                        <Button className="btn btn-light mt-1" onClick={handleLoginTestSeller}>Login with test Seller credentials </Button>
+                            <Button className="btn btn-light mt-1" onClick={handleLoginTestBuyer}>Login with test Buyer credentials </Button>
                         </div>
+                        
                         
                         <div style={{display:messageDisplay.display, color:"red"}}>{messageDisplay.message}</div>
                             <div>Do not have an account?<Link to='/userregistration' className="btn btn-link text-light">Register</Link></div>

@@ -13,6 +13,7 @@ function App() {
   const [userData, setUserData] = useState({});
   const [productData, setProductData] = useState([]);
   const [isLoading, setisLoading] = useState(false);
+  
 
   return (
           <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData, productData, setProductData,isLoading, setisLoading}}>
@@ -30,10 +31,7 @@ function App() {
                       </Route>
                       <Route exact path="/userregistration">
                         <UserRegister/>
-                      </Route> 
-                      <Route exact path="/home">
-                        <Home /> 
-                      </Route>                   
+                      </Route>                    
                   </Switch>
               </Router>
           </UserContext.Provider>
