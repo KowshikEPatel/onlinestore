@@ -12,7 +12,7 @@ export default function AddProduct() {
     const [stock, setStock] = useState(0);
     const [features, setFeatures] = useState('');
     const [file, setFile] = useState(null);
-    const [message,setMessage] = useState({display:"none",message:""})
+    const [message,setMessage] = useState({display:"none",message:""});
     
     const handleNameChange = (e)=>{
         setName(e.target.value)

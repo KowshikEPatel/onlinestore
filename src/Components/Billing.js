@@ -9,7 +9,10 @@ export default function Billing() {
     const [searchList,setSearchList] = useState([]);
     const [selectItem,setSelectItem] = useState({});
     const [quantity,setQuantity] = useState(0);
-    const [cart,setCart]= useState([])
+    const [cart,setCart]= useState([]);
+    const [description,setDescription] = useState("");
+    const [message,setMessage] = useState({display:"none",message:""});
+    const context = useContext(UserContext);
 
     const handleAddressChange = (e)=>{
         e.preventDefault();
@@ -24,15 +27,14 @@ export default function Billing() {
 
         e.preventDefault();
         let response = await axios.get("https://kp-onlinestore.herokuapp.com/products/key?search="+search.toLowerCase());
-        console.log(response);
         setSearchList(response.data);
     }
     
     const addToCart = (e)=>{
         e.preventDefault();
-        
         setCart([...cart,{"product":selectItem,"quantity":quantity}]);
-  
+        setSelectItem({});
+        setQuantity(0)
     }
 
     const selectProduct =  (obj)=>{
@@ -43,19 +45,41 @@ export default function Billing() {
         setQuantity(e.target.value)
     }
 
-    const onSubmit = ()=>{
+    const handleDescriptionChange = (e)=>{
+        setDescription(e.target.value)
+    }
 
+    const onSubmit = async()=>{
 
+        let totalValue = cart.map(e=>parseInt(e["quantity"])*e["product"]["price"]).reduce((sum,e)=>sum+e);
+        let billdata = {
+            "generatedBy":context.userData["_id"],
+            "billRecipient":address,
+            description,
+            "products":cart.map(e=>e["product"]["_id"]),
+            "productsqty":cart.map(e=>e["quantity"]),
+            "totalValue":totalValue,
+        }
+        let res = await axios.post("https://kp-onlinestore.herokuapp.com/bills",billdata);
+        if(res){
+            setMessage({display:"block",message:`Bill generated`});
+            setAddress("");
+            setSearch("");
+            setSearchList([]);
+            setQuantity(0);
+            setCart([]);
+        }
     }
 
     return (
         <>
            <Container>
                 <Card className="border-light m-3" style={{ width: '50rem'}}>
+                    <h3 style={{display:message.display,color:"green"}}>{message.message}</h3>
                     <Form>
-                        <Form.Group  className="mb-3" controlId="formBasicDescription">
+                        <Form.Group  className="mb-3" controlId="formAddress">
                             <Form.Label><Card.Title>Address</Card.Title></Form.Label>
-                            <Col xs={3}><Form.Control as="textarea" aria-label="Address" placeholder="Enter Address" onChange={handleAddressChange} row={4} /></Col>
+                            <Col xs={3}><Form.Control as="textarea" aria-label="Address" placeholder="Enter Address" onChange={handleAddressChange} row={4} value={address} /></Col>
                         </Form.Group>
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formProductName">
@@ -66,6 +90,7 @@ export default function Billing() {
                                     aria-label="Product search"
                                     aria-describedby="basic-addon2"
                                     onChange={handleSearch}
+                                    
                                     />
                                     <InputGroup.Text id="basic-addon2" onClick={getSearch} ><i className="fas fa-search"></i></InputGroup.Text>
                                 </InputGroup>
@@ -73,7 +98,7 @@ export default function Billing() {
 
                             <Form.Group as={Col} controlId="formQuantity">
                                 <Form.Label><Card.Title>Quantity</Card.Title></Form.Label>
-                                <Form.Control type="text" placeholder="Enter product quantity" onChange={handleQuantity} />
+                                <Form.Control type="text" placeholder="Enter product quantity" onChange={handleQuantity} value={quantity}/>
                             </Form.Group>
                             <Form.Group as={Col} controlId="formAddButton">
                                 <Button onClick={addToCart}><i className="fas fa-plus"></i></Button>
@@ -93,9 +118,9 @@ export default function Billing() {
                             })}
                         </div>
                         
-                        <Form.Group  className="mb-3" controlId="formBasicDescription">
-                            <Form.Label><Card.Title>Address</Card.Title></Form.Label>
-                            <Form.Control as="textarea" aria-label="Address" placeholder="Enter Address" onChange={handleAddressChange} row={4} />
+                        <Form.Group  className="mb-3" controlId="formDescription">
+                            <Form.Label><Card.Title>Bill Description</Card.Title></Form.Label>
+                            <Form.Control as="textarea" aria-label="BillAddress" placeholder="Enter Bill description" onChange={handleDescriptionChange} row={4} />
                         </Form.Group>
                         <Button className="mb-2" onClick={onSubmit}>Submit bill</Button>
                     </Form>
