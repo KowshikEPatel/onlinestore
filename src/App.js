@@ -7,6 +7,7 @@ import UserRegister from './Components/UserRegister';
 import Home from './Components/Home';
 import AddProduct from './Components/AddProduct';
 import Billing from './Components/Billing';
+import User from './Components/User';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,7 +32,10 @@ function App() {
                       </Route>
                       <Route exact path="/userregistration">
                         <UserRegister/>
-                      </Route>                    
+                      </Route> 
+                      <Route exact path="/user">
+                        <User/>
+                      </Route>                   
                   </Switch>
               </Router>
           </UserContext.Provider>
