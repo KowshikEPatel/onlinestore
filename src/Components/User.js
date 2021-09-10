@@ -49,6 +49,7 @@ export default function User() {
                         <Card>
                             <Card.Title>Bill {show.shownum+1}</Card.Title>
                             <Card.Text>{JSON.parse(billarray)}</Card.Text>
+                            <Button onClick={handleClose}>click</Button>
                         </Card>
                     </Col>
                </Row>
