@@ -13,7 +13,7 @@ export default function User() {
         let res = await axios.get(`https://kp-onlinestore.herokuapp.com/bills/user/${contextdata.userData._id}`)
         console.log(res);
         console.log(res.data);
-    },[])
+    },[contextdata.userData])
     return (
         <>
             <div style={{backgroundColor:'#006039',height:"30vh"}}>
