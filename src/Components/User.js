@@ -8,11 +8,6 @@ export default function User() {
     let contextdata = useContext(UserContext);
 
     const [billarray, setBillarray] = useState([]);
-//style={{display:show.showvar}}onClick={()=>{handleShow(index)}} 
-/*
-               
-               */
-    
     useEffect(()=>{
         async function fetchData(){
             let res = await axios.get(`https://kp-onlinestore.herokuapp.com/bills/user/${contextdata.userData._id}`);
