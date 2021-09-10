@@ -8,11 +8,14 @@ export default function User() {
     let contextdata = useContext(UserContext);
 
     console.log(contextdata.userData.role)
-    useEffect(async ()=>{
-
-        let res = await axios.get(`https://kp-onlinestore.herokuapp.com/bills/user/${contextdata.userData._id}`)
-        console.log(res);
-        console.log(res.data);
+    useEffect(()=>{
+        async function fetchData(){
+            let res = await axios.get(`https://kp-onlinestore.herokuapp.com/bills/user/${contextdata.userData._id}`)
+            console.log(res);
+            console.log(res.data);
+        }
+        fetchData()
+        
     },[contextdata.userData])
     return (
         <>
